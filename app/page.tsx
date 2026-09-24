@@ -90,6 +90,10 @@ const sortedDocuments = [...filteredDocuments].sort((a, b) => {
           官公庁・公的機関が公開する情報に絞って検索できるサービスです。
           ニュース記事や転載を避け、信頼できる原典へ直接たどり着けます。
         </p>
+        <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
+  現在はポートフォリオ用のサンプルデータを表示しています。
+  次の開発で、公的機関が公開する実際の一次情報へ対応予定です。
+</div>
 
         <form className="mt-10 flex gap-3" onSubmit={handleSubmit}>
           <input
