@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Source Lens
 
-## Getting Started
+官公庁・公的機関が公開する一次情報に絞って検索できるWebアプリです。
 
-First, run the development server:
+ニュース記事や転載記事ではなく、公式発表・会議資料・公的資料などの原典へ直接たどり着ける検索体験を目指しています。
+
+## 公開URL
+
+https://source-lens-jet.vercel.app/
+
+## 主な機能
+
+- キーワードによる検索結果の絞り込み
+- 発行機関（デジタル庁・総務省・文化庁）による絞り込み
+- 文書タイトル、発行機関、公開日、文書種別の表示
+- 「一次情報である根拠」の表示
+- 公式サイトへの外部リンク
+- 検索結果が0件の場合のメッセージ表示
+
+## 使用技術
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- GitHub
+- Vercel
+
+## 一次情報の判定方針
+
+本アプリでは、以下のような資料を一次情報として扱います。
+
+- 官公庁・公的機関が公式に公開した資料
+- 行政機関による公式発表
+- 公的な会議資料・検討会資料
+- 政府機関が公開する方針・統計・報告書
+
+各検索結果では、一次情報と判断した理由を表示しています。
+
+## 今後の改善予定
+
+- 実際の公式サイトやAPIからデータを取得する
+- 検索対象となる発行機関を増やす
+- 公開日順の並び替え機能を追加する
+- お気に入り保存機能を追加する
+- Supabaseを使ったデータベース・認証機能の追加
+
+## ローカルでの起動方法
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
