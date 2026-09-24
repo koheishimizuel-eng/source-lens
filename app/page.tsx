@@ -106,42 +106,47 @@ const sortedDocuments = [...filteredDocuments].sort((a, b) => {
             検索
           </button>
         </form>
-        <div className="mt-4">
-  <label
-    className="mb-2 block text-sm font-semibold text-slate-700"
-    htmlFor="organization"
-  >
-    発行機関で絞り込む
-  </label><label
-  className="mb-2 mt-4 block text-sm font-semibold text-slate-700"
-  htmlFor="sort-order"
->
-  並び順
-</label>
+       <div className="mt-4 grid gap-4 sm:grid-cols-2">
+  <div>
+    <label
+      className="mb-2 block text-sm font-semibold text-slate-700"
+      htmlFor="organization"
+    >
+      発行機関で絞り込む
+    </label>
 
-<select
-  id="sort-order"
-  className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 outline-none focus:border-blue-600"
-  value={sortOrder}
-  onChange={(event) => setSortOrder(event.target.value)}
->
-  <option value="newest">公開日が新しい順</option>
-  <option value="oldest">公開日が古い順</option>
-</select>
+    <select
+      id="organization"
+      className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 outline-none focus:border-blue-600"
+      value={selectedOrganization}
+      onChange={(event) => setSelectedOrganization(event.target.value)}
+    >
+      <option value="すべて">すべての機関</option>
+      <option value="デジタル庁">デジタル庁</option>
+      <option value="総務省">総務省</option>
+      <option value="文化庁">文化庁</option>
+    </select>
+  </div>
 
-  <select
-    id="organization"
-    className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 outline-none focus:border-blue-600"
-    value={selectedOrganization}
-    onChange={(event) => setSelectedOrganization(event.target.value)}
-  >
-    <option value="すべて">すべての機関</option>
-    <option value="デジタル庁">デジタル庁</option>
-    <option value="総務省">総務省</option>
-    <option value="文化庁">文化庁</option>
-  </select>
+  <div>
+    <label
+      className="mb-2 block text-sm font-semibold text-slate-700"
+      htmlFor="sort-order"
+    >
+      並び順
+    </label>
+
+    <select
+      id="sort-order"
+      className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 outline-none focus:border-blue-600"
+      value={sortOrder}
+      onChange={(event) => setSortOrder(event.target.value)}
+    >
+      <option value="newest">公開日が新しい順</option>
+      <option value="oldest">公開日が古い順</option>
+    </select>
+  </div>
 </div>
-
         {hasSearched && (
           <div className="mt-12">
             <p className="mb-5 text-sm font-medium text-slate-600">
