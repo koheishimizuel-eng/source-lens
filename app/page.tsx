@@ -3,19 +3,19 @@
 import { type FormEvent, useState } from "react";
 
 const documents = [
-  {
-    title: "生成AIの利用に関する政府方針",
-    organization: "デジタル庁",
-    date: "2025年5月30日",
-    publishedAt: "2025-05-30",
+{
+  title: "「AI事業者ガイドライン（第1.0版）」を取りまとめました",
+  organization: "総務省・経済産業省",
+  date: "2024年4月19日",
+  publishedAt: "2024-04-19",
+  type: "公式発表",
+  description:
+    "総務省と経済産業省が、生成AIの普及などを踏まえて既存のガイドラインを統合・更新し、AI事業者向けガイドラインを公表した資料です。",
+  primarySourceReason:
+    "経済産業省が、総務省との共同取りまとめとして公式サイトで直接公開した発表です。",
+  url: "https://www.meti.go.jp/press/2024/04/20240419004/20240419004.html",
+},
   
-    type: "公式発表",
-    description:
-      "行政機関における生成AIの活用方針と、安全な利用のための基本的な考え方をまとめた資料です。",
-    primarySourceReason:
-      "デジタル庁が公式に公開した行政機関向けの方針資料です。",
-    url: "https://www.digital.go.jp/",
-  },
   {
     title: "AI戦略に関する検討会資料",
     organization: "総務省",
@@ -29,17 +29,17 @@ const documents = [
     url: "https://www.soumu.go.jp/",
   },
   {
-    title: "生成AIの活用と著作権に関する整理",
-    organization: "文化庁",
-    date: "2025年3月12日",
-    publishedAt: "2025-03-12",
-    type: "公的資料",
-    description:
-      "生成AIを利用する際に検討すべき著作権上の論点を整理した資料です。",
-    primarySourceReason:
-      "文化庁が公式に公開した著作権に関する公的資料です。",
-    url: "https://www.bunka.go.jp/",
-  },
+  title: "AIと著作権に関する考え方について",
+  organization: "文化庁",
+  date: "2024年3月15日",
+  publishedAt: "2024-03-15",
+  type: "公式資料",
+  description:
+    "文化審議会著作権分科会の法制度小委員会が、生成AIと著作権の関係について取りまとめた考え方を紹介する文化庁の資料です。",
+  primarySourceReason:
+    "文化庁が公式サイトで公開し、同庁の審議会で取りまとめられた資料です。",
+  url: "https://www.bunka.go.jp/seisaku/chosakuken/aiandcopyright.html",
+},
 ];
 
 export default function Home() {
@@ -90,9 +90,9 @@ const sortedDocuments = [...filteredDocuments].sort((a, b) => {
           官公庁・公的機関が公開する情報に絞って検索できるサービスです。
           ニュース記事や転載を避け、信頼できる原典へ直接たどり着けます。
         </p>
-        <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
-  現在はポートフォリオ用のサンプルデータを表示しています。
-  次の開発で、公的機関が公開する実際の一次情報へ対応予定です。
+       <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900">
+  現在は、デジタル庁・総務省・経済産業省・文化庁が公式に公開した
+  一次情報を掲載しています。今後、検索対象となる機関・資料を拡充予定です。
 </div>
 
         <form className="mt-10 flex gap-3" onSubmit={handleSubmit}>
@@ -128,6 +128,7 @@ const sortedDocuments = [...filteredDocuments].sort((a, b) => {
       <option value="すべて">すべての機関</option>
       <option value="デジタル庁">デジタル庁</option>
       <option value="総務省">総務省</option>
+      <option value="総務省・経済産業省">総務省・経済産業省</option>
       <option value="文化庁">文化庁</option>
     </select>
   </div>
