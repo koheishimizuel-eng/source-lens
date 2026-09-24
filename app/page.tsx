@@ -7,6 +7,8 @@ const documents = [
     title: "生成AIの利用に関する政府方針",
     organization: "デジタル庁",
     date: "2025年5月30日",
+    publishedAt: "2025-05-30",
+  
     type: "公式発表",
     description:
       "行政機関における生成AIの活用方針と、安全な利用のための基本的な考え方をまとめた資料です。",
@@ -18,6 +20,7 @@ const documents = [
     title: "AI戦略に関する検討会資料",
     organization: "総務省",
     date: "2025年4月18日",
+    publishedAt: "2025-04-18",
     type: "会議資料",
     description:
       "AI技術の社会実装と、情報通信分野における今後の施策を扱う公式資料です。",
@@ -29,6 +32,7 @@ const documents = [
     title: "生成AIの活用と著作権に関する整理",
     organization: "文化庁",
     date: "2025年3月12日",
+    publishedAt: "2025-03-12",
     type: "公的資料",
     description:
       "生成AIを利用する際に検討すべき著作権上の論点を整理した資料です。",
@@ -42,10 +46,12 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
 const [selectedOrganization, setSelectedOrganization] = useState("すべて");
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+const [sortOrder, setSortOrder] = useState("newest");  
+function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setHasSearched(true);
   }
+  
 
 const filteredDocuments = documents.filter((document) => {
   const searchableText =
@@ -59,7 +65,13 @@ const filteredDocuments = documents.filter((document) => {
 
   return matchesQuery && matchesOrganization;
 });
+const sortedDocuments = [...filteredDocuments].sort((a, b) => {
+  if (sortOrder === "newest") {
+    return b.publishedAt.localeCompare(a.publishedAt);
+  }
 
+  return a.publishedAt.localeCompare(b.publishedAt);
+});
   return (
     <main className="min-h-screen bg-slate-50 px-6 py-16 text-slate-900">
       <section className="mx-auto max-w-3xl">
@@ -100,7 +112,22 @@ const filteredDocuments = documents.filter((document) => {
     htmlFor="organization"
   >
     発行機関で絞り込む
-  </label>
+  </label><label
+  className="mb-2 mt-4 block text-sm font-semibold text-slate-700"
+  htmlFor="sort-order"
+>
+  並び順
+</label>
+
+<select
+  id="sort-order"
+  className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 outline-none focus:border-blue-600"
+  value={sortOrder}
+  onChange={(event) => setSortOrder(event.target.value)}
+>
+  <option value="newest">公開日が新しい順</option>
+  <option value="oldest">公開日が古い順</option>
+</select>
 
   <select
     id="organization"
@@ -127,7 +154,7 @@ const filteredDocuments = documents.filter((document) => {
               </div>
             ) : (
               <div className="space-y-4">
-                {filteredDocuments.map((document) => (
+                {sortedDocuments.map((document) => (
                   <article
                     className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
                     key={document.title}
