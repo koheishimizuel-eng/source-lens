@@ -1,12 +1,13 @@
 import { execSync } from "child_process";
 
+// 自動収集したい対象ページと組織のリスト
+// ※ url には必ず "https://" から始まる正しいWebアドレスを指定してください
 const targetSources = [
   {
     url: "https://www.digital.go.jp/news/decb64eb-f26e-41cb-8d37-f3dd173108b8",
     organization: "デジタル庁",
   },
   {
-    // 正しいURLに修正（例：総務省の公式URL）
     url: "https://www.soumu.go.jp/main_sosiki/kenkyu/ai_governance/index.html",
     organization: "総務省",
   },
@@ -19,7 +20,7 @@ async function runAutoFetchAll() {
     try {
       console.log(`\n-----------------------------------`);
       console.log(`取得開始: ${source.organization} (${source.url})`);
-      
+
       execSync(`npx tsx scripts/fetch-document.ts "${source.url}" "${source.organization}"`, {
         stdio: "inherit",
       });

@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { JSDOM } from "jsdom";
-import type { Document } from "../data/documents";
+import type { Document } from "../data/document";
+
 // コマンドライン引数からURLと組織名を取得
 const targetUrl = process.argv[2];
 const organizationInput = process.argv[3] || "不明";
@@ -16,7 +17,14 @@ async function addDocumentAutomatically() {
   try {
     console.log(`[1/3] ページを取得中: ${targetUrl}`);
     const response = await globalThis.fetch(targetUrl);
-    const htmlText = await response.text();
+    
+    // Shift_JIS等の文字化け防止のため ArrayBuffer で受けてデコード
+    const arrayBuffer = await response.arrayBuffer();
+    const contentType = response.headers.get("content-type") || "";
+    const isShiftJis = contentType.includes("shift_jis") || contentType.includes("sjis");
+
+    const decoder = new TextDecoder(isShiftJis ? "shift_jis" : "utf-8");
+    const htmlText = decoder.decode(arrayBuffer);
 
     // HTMLを解析
     const dom = new JSDOM(htmlText);
@@ -52,14 +60,14 @@ async function addDocumentAutomatically() {
     console.log("[2/3] 自動抽出し作成されたデータ:");
     console.log(newDoc);
 
-    // data/documents.ts ファイルを読み込み＆更新
-    const filePath = path.join(process.cwd(), "data", "documents.ts");
-    let fileContent = fs.readFileSync(filePath, "utf-8");
+    // data/document.ts ファイルを読み込み＆更新
+    const filePath = path.join(process.cwd(), "data", "document.ts");
+    const fileContent = fs.readFileSync(filePath, "utf-8");
 
     // Arrayの末尾 (];) の直前に新データを注入
     const insertPosition = fileContent.lastIndexOf("];");
     if (insertPosition === -1) {
-      throw new Error("data/documents.ts の構造が想定と異なります。");
+      throw new Error("data/document.ts の構造が想定と異なります。");
     }
 
     const formattedData = `  {\n` +
@@ -79,7 +87,7 @@ async function addDocumentAutomatically() {
       fileContent.slice(insertPosition);
 
     fs.writeFileSync(filePath, updatedContent, "utf-8");
-    console.log("[3/3] data/documents.ts への自動追加が完了しました！");
+    console.log("[3/3] data/document.ts への自動追加が完了しました！");
 
   } catch (error) {
     console.error("データの追加に失敗しました:", error);
