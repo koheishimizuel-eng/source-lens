@@ -10,7 +10,6 @@ const targetSources = [
     url: "https://www.soumu.go.jp/main_sosiki/kenkyu/ai_governance/index.html",
     organization: "総務省",
   },
-  // 今後増やしたいURLをここに追加するだけでOK
 ];
 
 async function runAutoFetchAll() {
@@ -21,7 +20,6 @@ async function runAutoFetchAll() {
       console.log(`\n-----------------------------------`);
       console.log(`取得開始: ${source.organization} (${source.url})`);
       
-      // 先ほど作成した単体取得スクリプトを順番に実行
       execSync(`npx tsx scripts/fetch-document.ts "${source.url}" "${source.organization}"`, {
         stdio: "inherit",
       });
