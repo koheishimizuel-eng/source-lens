@@ -1,0 +1,39 @@
+name: Daily Auto Fetch Documents
+
+on:
+  schedule:
+    # 毎日 午前9:00 (JST) に自動実行 (UTC 0:00)
+    - cron: '0 0 * * *'
+  # GitHubの画面から手動でボタンを押して即時実行することも可能
+  workflow_dispatch:
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js のセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 依存関係のインストール
+        run: npm ci
+
+      - name: 自動収集スクリプトの実行
+        run: npx tsx scripts/auto-fetch-all.ts
+
+      - name: 変更があった場合に自動コミット＆プッシュ
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add data/documents.ts
+          if git diff --staged --quiet; then
+            echo "新しいデータの追加はありませんでした。"
+          else
+            git commit -m "Auto: Update documents via Daily GitHub Action"
+            git push
+          fi

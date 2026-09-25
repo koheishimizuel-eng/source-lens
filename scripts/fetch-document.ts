@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { JSDOM } from "jsdom";
-import type { Document } from "../data/documents.ts";
-
+import type { Document } from "../data/documents";
 // コマンドライン引数からURLと組織名を取得
 const targetUrl = process.argv[2];
 const organizationInput = process.argv[3] || "不明";
